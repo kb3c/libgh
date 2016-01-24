@@ -1,16 +1,29 @@
-# libgh
+=libgh
+2016jan24:gsh
 
-## Synopsis
+*DO NOT PUSH TO BRANCH MASTER.*
+The master branch is only for 'verified' stable versioning. To submit a change or update, push to a new branch and updates will appear pending a merge.
+
+==Synopsis
 
 libgh supports interfaces to C.
 
 
-## Erratae
+==tst/
 
-Each RELEASE and REVISION is `tar.gz`d and located in the root folder.
+try
+	`tst/ $ ./qu_build.sh`
+	`tst/ $ ./qu_build.sh f`
+	
+==Erratae
 
-See: ISSUES -- to offer opinions as to how these releases (platform/arch) should be organized.
+Each version is `.gz`d.
+Try
+	`$ make prepare`
 
-*DO NOT PUSH TO BRANCH MASTER.*
+Then you will want to link to a target to use tst/ as per displayed info.
 
-The master branch is only for 'verified' stable versioning. To submit a change or update, push to a new branch and updates will appear pending a merge.
+
+==See: ISSUES 
+
+to offer opinions as to how these releases (platform/arch) should be organized.
