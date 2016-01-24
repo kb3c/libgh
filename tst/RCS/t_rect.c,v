@@ -1,0 +1,155 @@
+head	1.2;
+access;
+symbols;
+locks
+	pi:1.2; strict;
+comment	@ * @;
+
+
+1.2
+date	2016.01.13.08.52.04;	author pi;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2015.12.10.08.03.20;	author pi;	state Exp;
+branches;
+next	;
+
+
+desc
+@unit test for libgh rect interface
+@
+
+
+1.2
+log
+@Update with more API tests
+@
+text
+@/* -*- Mode: C; tab-width: 2; indent-tabs-mode: t; c-basic-offset: 2 -*- */
+/* t_rect.c
+ *
+ * Updated for 1.0.0.3
+ * 
+ * Copyright (c) 2015-2016, polarysekt
+ */
+
+#include "tst.h"
+
+void showRectInfo( ghRECT* pr ) {
+  gh_printf( "X     : %d\n", ghRectGetX(pr) );
+  gh_printf( "Y     : %d\n", ghRectGetY(pr) );
+  gh_printf( "WIDTH : %d\n", ghRectGetWidth(pr) );
+  gh_printf( "HEIGHT: %d\n", ghRectGetHeight(pr) );
+  gh_printf( "X2    : %d\n", ghRectGetX2(pr) );
+  gh_printf( "Y2    : %d\n", ghRectGetY2(pr) );
+}
+
+int main( int argc, char** argv ) {
+
+  /* pointer to ghRECT to be created/destroyed */
+  ghRECT* pr;
+
+  /* Allocate some manual get/set variables */
+  /*TODO 
+   *   int	rx, ry, rx2, ry2;
+   *   unsigned int rw, rh;
+   */
+
+  ut_showheader( "t_rect", 0 );
+
+  ut_showsection( "CREATE ghRECT : DISPLAY EACH" );
+  
+  pr = ghRectCreate();
+
+  showRectInfo( pr );
+  
+  ut_showsection( "SET ghRECT EACH : DISPLAY EACH" );
+
+  ghRectSetX( pr, 10 );
+  ghRectSetY( pr, 10 );
+  ghRectSetWidth( pr, 100 );
+  ghRectSetHeight( pr, 100 );
+
+  showRectInfo( pr );
+
+  ut_showsection( "SET ghRECT X2,Y2 : DISPLAY EACH" );
+  ghRectSetX2( pr, 200 );
+  ghRectSetY2( pr, 200 );
+
+  showRectInfo( pr );
+  
+  ut_showsection( "SET ghRECT PAIRS : DISPLAY PAIRS" );
+
+  ghRectSetPosition( pr, 12, 12 );
+  ghRectSetExtent( pr, 120, 120 );
+
+  /*
+  ghRectGetPosition( pr, &rx, &ry );
+  ghRectGetExtent( pr, &rw, &rh );
+  ghRectGetExtentPosition( pr, &rx2, &ry2 );
+  */
+  
+  showRectInfo( pr );
+
+  ut_showsection( "DESTROY ghRECT" ); 
+  
+  ghRectDestroy( pr );
+  
+  ut_showheader( "t_rect", 1 );
+
+  return 0;
+}
+
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d4 1
+a4 1
+ * Updated for 1.x
+d11 9
+d26 4
+a29 3
+  int	rx, ry, rx2, ry2;
+  unsigned int rw, rh;
+	
+d37 1
+a37 6
+  gh_printf( "X     : %d\n", ghRectGetX(pr) );
+  gh_printf( "Y     : %d\n", ghRectGetY(pr) );
+  gh_printf( "WIDTH : %d\n", ghRectGetWidth(pr) );
+  gh_printf( "HEIGHT: %d\n", ghRectGetHeight(pr) );
+  gh_printf( "X2    : %d\n", ghRectGetX2(pr) );
+  gh_printf( "Y2    : %d\n", ghRectGetY2(pr) );
+d46 1
+a46 6
+  gh_printf( "X     : %d\n", ghRectGetX(pr) );
+  gh_printf( "Y     : %d\n", ghRectGetY(pr) );
+  gh_printf( "WIDTH : %d\n", ghRectGetWidth(pr) );
+  gh_printf( "HEIGHT: %d\n", ghRectGetHeight(pr) );
+  gh_printf( "X2    : %d\n", ghRectGetX2(pr) );
+  gh_printf( "Y2    : %d\n", ghRectGetY2(pr) );
+d52 1
+a52 6
+  gh_printf( "X     : %d\n", ghRectGetX(pr) );
+  gh_printf( "Y     : %d\n", ghRectGetY(pr) );
+  gh_printf( "WIDTH : %d\n", ghRectGetWidth(pr) );
+  gh_printf( "HEIGHT: %d\n", ghRectGetHeight(pr) );
+  gh_printf( "X2    : %d\n", ghRectGetX2(pr) );
+  gh_printf( "Y2    : %d\n", ghRectGetY2(pr) );
+d58 2
+a59 1
+	
+d63 3
+a65 4
+
+  gh_printf( "X, Y  : %d, %d\n", rx, ry );
+  gh_printf( "W, H  : %d, %d\n", rw, rh );
+  gh_printf( "X2, Y2: %d, %d\n", rx2, ry2 );
+@
