@@ -26,20 +26,29 @@
 #    define ghDBGVRBprintf(...)	((void)0)
 #  endif
 
+#define ghDpf		ghDBGprintf
+#define ghDVpf		ghDBGVRBprintf
 
 
 /*** ghP (Platform Defines) ***/
 #  define ghP_NONE	0
+/* 'c' */
 #  define ghP_CURSES	100
+/* 'w' */
 #  define ghP_MSWIN	201
 #  define ghP_MSWIN64   202
 #  define ghP_WIN	ghP_MSWIN
+/* 'm' */
 #  define ghP_MAC	300
 #  define ghP_CARBON	301
+/* 'o' : tentative */
 #  define ghP_OSX	302
+/* 'i' */
 #  define ghP_IOS	303
+/* 'x' */
 #  define ghP_X		400
 #  define ghP_X11 	ghP_X
+/* 'a' */
 #  define ghP_ANDROID	401
 
 
@@ -66,6 +75,7 @@ typedef int	ghRET;
 
 
 /*** ERROR enum ***/
+/* TODO: integrate shorter error defines */
 typedef enum t_ghERROR {
   ghERROR_GENERIC = INT_MIN,
   ghERROR_OUT_OF_MEMORY,
@@ -75,6 +85,7 @@ typedef enum t_ghERROR {
   ghERROR_INVALID_CONTEXT,
   ghERROR_INVALID_COORDINATE,
   ghERROR_INVALID_DISPLAY,
+  ghERROR_INVALID_DRAWABLE,
   ghERROR_INVALID_FILESPEC,
   ghERROR_INVALID_FUNCTION_PTR,
   ghERROR_UNINITIALIZED_PLATFORM,
@@ -88,15 +99,29 @@ typedef enum t_ghERROR {
   ghERROR_NONE = 0
 } ghERROR;
 
-#  define ghSUCCESS	ghERROR_NONE
-#  define ghERROR_INVALID_COORD ghERROR_INVALID_COORDINATE
+/*TODO: fix, as this was a workaround */
+#define ghERROR_INVALID_COORD ghERROR_INVALID_COORDINATE
+/*    */
 
+#define ghERR_INV_COORD	ghERROR_INVALID_COORDINATE
+#define ghERR_GENERIC	ghERROR_GENERIC
+#define ghERR_OOM		ghERROR_OUT_OF_MEMORY
+#define ghERR_NOTSUPP	ghERROR_UNSUPPORTED_PLATFORM
+#define ghERR_INV_ARG	ghERROR_INVALID_ARGUMENT
+#define ghERR_NONE		ghERROR_NONE
+
+#define ghSUCCESS		ghERROR_NONE
+
+
+/* TODO: integrate new name for type */
 typedef enum t_ghVERSIONFIELD {
   ghVF_major = 0,
   ghVF_minor,
   ghVF_release,
   ghVF_revision,
-  ghVF_profilebuild,
+  ghVF_minorbuild,
+  ghVF_releasebuild,
+  ghVF_revisionbuild,
   ghVF_build,
   ghVF_title,
   ghVF_author,
@@ -104,6 +129,8 @@ typedef enum t_ghVERSIONFIELD {
   ghVF_architecture,
   ghVF_platform
 } ghVERSIONFIELD;
+#define ghVERSIONFIELDREF	ghVERSIONFIELD;
+#define ghVFR				ghVERSIONFIELD;
 
 /*** libgh Declarations ***/
 
@@ -167,29 +194,41 @@ typedef enum t_ghTTYATTR {
 
 /*** Forward Declarations ***/
 /*typedef struct t_ghAPPLICATION	ghAPPLICATION;*/
-typedef struct t_ghCONTEXT	ghCONTEXT;
-typedef struct t_ghFONT		ghFONT;
-typedef struct t_ghGENERIC	ghGENERIC;
-typedef struct t_ghHANDLER	ghHANDLER;
-typedef struct t_ghIMAGE	ghIMAGE;
-typedef struct t_ghMONITOR	ghMONITOR;
-typedef struct t_ghRECT		ghRECT;
+typedef struct t_ghCONTEXT		ghCONTEXT;
+typedef struct t_ghDRAWABLE		ghDRAWABLE;
+typedef struct t_ghFONT			ghFONT;
+typedef struct t_ghGENERIC		ghGENERIC;
+typedef struct t_ghHANDLER		ghHANDLER;
+typedef struct t_ghIMAGE		ghIMAGE;
+typedef struct t_ghLISTABLE		ghLISTABLE;
+typedef struct t_ghMONITOR		ghMONITOR;
+typedef struct t_ghRECT			ghRECT;
+typedef struct t_ghRENDERABLE	ghRENDERABLE;
 typedef struct t_ghRUNNABLE 	ghRUNNABLE;
 /*typedef struct t_ghTGAIMAGE	ghTGAIMAGE;*/
-typedef struct t_ghSPRITE	ghSPRITE;
+typedef struct t_ghSHAPE		ghSHAPE;
+typedef struct t_ghSPRITE		ghSPRITE;
 typedef struct t_ghSTACKABLE	ghSTACKABLE;
-typedef struct t_ghWINDOW	ghWINDOW;
+typedef struct t_ghWINDOW		ghWINDOW;
 
 /*** Actual Declarations ***/
 typedef struct t_gh2DCOORD {
   int x;
   int y;
 } gh2DCOORD;
+#define ghXY gh2DCOORD
+
+typedef struct t_ghXYZ {
+  int x;
+  int y;
+  int z;
+} ghXYZ;
 
 typedef struct t_ghEXTENT	{
   unsigned int w;
   unsigned int h;
 } ghEXTENT;
+#define ghWH ghEXTENT
 
 /*** STDLIB WRAPPERS ***/
 int		gh_printf( const char *fmt, ... );
@@ -279,9 +318,9 @@ ghRET	ghRectSetY2( ghRECT* pr, int y2 );
 #define ghRectSetExtentY ghRectSetY2
 ghRET	ghRectSetExtentPosition2i( ghRECT* pr, int x2, int y2 );
 #define ghRectSetExtentPosition ghRectSetExtentPosition2i
-int	ghRectGetX( ghRECT* pr );
+int		ghRectGetX( ghRECT* pr );
 #define ghRectGetLeft ghRectGetX
-int	ghRectGetY( ghRECT* pr );
+int		ghRectGetY( ghRECT* pr );
 #define ghRectGetTop ghRectGetTop
 ghRET	ghRectGetPosition2i( ghRECT* pr, int* x, int* y );
 #define ghRectGetPosition ghRectGetPosition2i
@@ -289,7 +328,7 @@ unsigned int	ghRectGetHeight( ghRECT* pr );
 unsigned int	ghRectGetWidth( ghRECT* pr );
 ghRET	ghRectGetExtent2ui( ghRECT* pr, unsigned int* width, unsigned int* height );
 #define ghRectGetExtent ghRectGetExtent2ui
-int	ghRectGetX2( ghRECT* pr );
+int		ghRectGetX2( ghRECT* pr );
 #define ghRectGetRight ghRectGetX2
 #define ghRectGetExtentX ghRectGetX2
 int	ghRectGetY2( ghRECT* pr );
@@ -361,18 +400,22 @@ unsigned int ghWindowGetBorderWidth( ghWINDOW* pw );
 ghRET		ghWindowSetBorderWidth( ghWINDOW* pw, unsigned int bw );
 ghRET		ghWindowShow( ghWINDOW* pw );
 ghRET		ghWindowHide( ghWINDOW* pw );
-int		ghWindowGetX( ghWINDOW* pw );
-int		ghWindowGetY( ghWINDOW* pw );
+
+ghRET		ghWindowRaise( ghWINDOW* pw );
+ghRET		ghWindowLower( ghWINDOW* pw );
+
+int			ghWindowGetX( ghWINDOW* pw );
+int			ghWindowGetY( ghWINDOW* pw );
 ghRET		ghWindowGetPosition2i( ghWINDOW* pw, int* x, int* y );
 #define ghWindowGetPosition ghWindowGetPosition2i
 unsigned int	ghWindowGetWidth( ghWINDOW* pw );
 unsigned int	ghWindowGetHeight( ghWINDOW* pw );
 ghRET		ghWindowGetExtent2i( ghWINDOW* pw, unsigned int* w, unsigned int* h );
 #define ghWindowGetExtent ghWindowGetExtent2ui
-int		ghWindowGetX2( ghWINDOW* pw );
+int			ghWindowGetX2( ghWINDOW* pw );
 #define ghWindowGetRight ghWindowGetX2
 #define ghWindowGetExtentX ghWindowGetX2
-int		ghWindowGetY2( ghWINDOW* pw );
+int			ghWindowGetY2( ghWINDOW* pw );
 #define ghWindowGetBottom ghWindowGetY2
 #define ghWindowGetExtentY ghWindowGetY2
 ghRET		ghWindowGetExtentPosition2i( ghWINDOW* pw, int* x2, int* y2 );
@@ -395,6 +438,13 @@ ghRET		ghWindowSetY2( ghWINDOW* pw, int y2 );
 ghRET		ghWindowSetExtentPosition2i( ghWINDOW* pw, int x2, int y2 );
 #define ghWindowSetExtentPosition ghWindowSetExtentPosition2i
 ghRET	ghWindowSetRect( ghWINDOW* pw, ghRECT* pr);
+
+/*** libgh drawable api ***/
+ghDRAWABLE* ghDrawableCreate();
+ghDRAWABLE* ghDrawableInit( ghDRAWABLE* pd );
+ghDRAWABLE* ghDrawableShutdown( ghDRAWABLE *pd );
+ghRET		ghDrawableDestroy( ghDRAWABLE* pd );
+
 
 /*** libgh image api ***/
 ghIMAGE*	ghImageCreate( );
