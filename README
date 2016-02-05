@@ -1,29 +1,52 @@
-=libgh
+libgh
+=====
+2016feb05:gsh
 2016jan24:gsh
 
-*DO NOT PUSH TO BRANCH MASTER.*
-The master branch is only for 'verified' stable versioning. To submit a change or update, push to a new branch and updates will appear pending a merge.
 
-==Synopsis
+== Synopsis
 
-libgh supports interfaces to C.
+libgh supports interfaces to C and C++.
 
+== Getting Started
 
-==tst/
+=== Extract the library
 
-try
-	`tst/ $ ./qu_build.sh`
-	`tst/ $ ./qu_build.sh f`
-	
-==Erratae
+Ensure you know the architecture and platform of your project.
+
+On linux try,
+
+----
+$ uname -m
+----
 
 Each version is `.gz`d.
+
+==== Manual Extraction
+
+NOTE: the `-k` option will retain the source archive.
+
+----
+$ gunzip -k <version>/libgh-<arch>-<platform>*.gz
+----
+
+The versioning info is likely to change in the near future to meet standards.
+
+Do not get too hardcoded about the way they are labeled now.
+
+
+==== Easy way?
+
 Try
 	`$ make prepare`
 
 Then you will want to link to a target to use tst/ as per displayed info.
 
 
-==See: ISSUES 
+=== Copy the headers
 
-to offer opinions as to how these releases (platform/arch) should be organized.
+the headers are alongside the library.
+
+the 'C' header is always necessary.
+
+the 'C++' header is only necessary if the project requires C++ interfaces.
