@@ -1,10 +1,12 @@
 #! /bin/bash
 
 ## qu_rebuild.sh
-## Copyright (c) 2015, polarysekt
+## pluggable rebuild script for LCP_01
+## Copyright (c) 2015-2016, polarysekt
+######################################
 
-echo -n "    libgh_JESYKA/tst:: qu_build ( FLAGS= "
-
+#echo -n "    libgh_JESYKA/tst:: qu_build ( FLAGS= "
+echo -n "::qu_build ( FLAGS= "
 if [[ ( "f" == $1 ) || ( "f" == $2 ) || ( "f" == $3 ) ]];
 then
   echo -n "[f]orce "
@@ -25,5 +27,5 @@ fi
 
 echo ") >>"
 
-echo "      libgh/tst make:: $ghbsz_TARGET >"
+echo "libgh/tst make:: $ghbsz_TARGET >"
 make $ghbsz_OPT -sf makefile.t $ghbsz_TARGET
