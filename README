@@ -1,5 +1,6 @@
 libgh
 =====
+2016mar02:gsh
 2016feb05:gsh
 2016jan24:gsh
 
@@ -8,7 +9,14 @@ libgh
 
 libgh supports interfaces to C and C++.
 
+Currently the interface to C++ is a bit of a kludge.
+
+BIG NOTE: version 1.3 will be changing everything!!!
+
 == Getting Started
+
+The library has been provided in a binary form, 
+so it has been compressed with gzip.
 
 === Extract the library
 
