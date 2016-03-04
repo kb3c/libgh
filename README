@@ -4,6 +4,7 @@ libgh
 2016feb05:gsh
 2016jan24:gsh
 
+There is only one branch on this repo...
 
 == Synopsis
 
@@ -12,6 +13,9 @@ libgh supports interfaces to C and C++.
 Currently the interface to C++ is a bit of a kludge.
 
 BIG NOTE: version 1.3 will be changing everything!!!
+
+Oh, and MS-Win targets will be available soon!
+Hang tight, April!
 
 == Getting Started
 
