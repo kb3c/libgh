@@ -1,64 +1,12 @@
 libgh
 =====
-2016mar02:gsh
-2016feb05:gsh
-2016jan24:gsh
-
-There is only one branch on this repo...
-
-== Synopsis
-
-libgh supports interfaces to C and C++.
-
-Currently the interface to C++ is a bit of a kludge.
-
-BIG NOTE: version 1.3 will be changing everything!!!
-
-Oh, and MS-Win targets will be available soon!
-Hang tight, April!
-
-== Getting Started
-
-The library has been provided in a binary form, 
-so it has been compressed with gzip.
-
-=== Extract the library
-
-Ensure you know the architecture and platform of your project.
-
-On linux try,
-
-----
-$ uname -m
-----
-
-Each version is `.gz`d.
-
-==== Manual Extraction
-
-NOTE: the `-k` option will retain the source archive.
-
-----
-$ gunzip -k <version>/libgh-<arch>-<platform>*.gz
-----
-
-The versioning info is likely to change in the near future to meet standards.
-
-Do not get too hardcoded about the way they are labeled now.
+2019.09.11-polarysekt
 
 
-==== Easy way?
+NOTE: This is the home of the now deprecated v0.1.x libs.
 
-Try
-	`$ make prepare`
+Please see:
 
-Then you will want to link to a target to use tst/ as per displayed info.
-
-
-=== Copy the headers
-
-the headers are alongside the library.
-
-the 'C' header is always necessary.
-
-the 'C++' header is only necessary if the project requires C++ interfaces.
+	https://github.com/polarysekt/libGH]
+	
+for the currently maintained libs!
